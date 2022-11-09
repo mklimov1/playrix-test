@@ -2,6 +2,7 @@ const { merge } = require(`webpack-merge`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
 const { CleanWebpackPlugin } = require(`clean-webpack-plugin`);
 const paths = require(`./paths`);
+const CopyWebpackPlugin = require(`copy-webpack-plugin`);
 
 const projectConfig = require(`./project.config`);
 const isAvailable = {
@@ -69,6 +70,17 @@ const getConfig = (env) => {
       ],
     },
     plugins: [
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: `${paths.src}/assets/images`,
+            to: `assets`,
+            globOptions: {
+              ignore: [`**.js`, `*.DS_Store`],
+            },
+          },
+        ],
+      }),
       new HtmlWebpackPlugin({
         template: `${paths.src}/template/index.html`,
         filename: `index.html`,
