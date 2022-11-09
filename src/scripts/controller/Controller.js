@@ -15,16 +15,14 @@ export default class Controller {
     const platform = getPlatform(PROJECT_DATA.platform);
     const assets = await this.loadAssets();
     const game = new Game(this.node, assets);
+
     console.log(assets);
-    console.log(game);
+    game.start();
+    window.addEventListener(`resize`, () => game.resize());
   }
 
   async loadAssets() {
-    const assets = {
-      images: await loadImages(imageSources),
-    };
-
-    return assets;
+    return loadImages(imageSources);
   }
 
   hideLoadingAnimation() {}

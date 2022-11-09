@@ -1,11 +1,12 @@
+import { setProps } from "../utils";
 import Graphics from "./Graphics";
 
 export default class Circle extends Graphics {
-  constructor(radius, color, props) {
+  constructor(radius, color, props = {}) {
     const width = radius * 2;
     const height = radius * 2;
 
-    super(width, height, props);
+    super(width, height);
 
     if (Array.isArray(color)) {
       this.beginFill(...color);
@@ -15,5 +16,10 @@ export default class Circle extends Graphics {
 
     this.drawCircle(radius, radius, radius);
     this.endFill();
+
+    setProps(this, {
+      origin: 0.5,
+      ...props,
+    });
   }
 }
