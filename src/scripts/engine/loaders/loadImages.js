@@ -1,16 +1,23 @@
-export default async (images) => {
-  const promises = Object.entries(images).map(([name, img]) => new Promise((resolve) => {
-    if (img.complete) {
-      resolve([name, img]);
-    } else {
-      img.addEventListener(`load`, () => {
-        resolve([name, img]);
-      });
-    }
-  }));
-  const arrayToObject = (prev, [name, img]) => ({ ...prev, [name]: img });
+const { Assets } = PIXI;
+const getExtension = (filename) => filename.split(`.`).pop();
+const loadImg = (name, src) => {
+  Assets.add(name, src);
+  return Assets.load(name);
+};
+const loaderMap = {
+  json: loadImg,
+  png: loadImg,
+  jpg: loadImg,
+};
+export default async (sources) => {
+  const promises = Object.entries(sources).map(([name, src]) => {
+    const ext = getExtension(src);
+    const load = loaderMap[ext];
 
-  const imgs = await Promise.all(promises).then((values) => values.reduce(arrayToObject, {}));
+    return load(name, src);
+  });
 
-  return imgs
+  const resources = await Promise.all(promises).then((values) => values);
+
+  return resources;
 };
