@@ -1,8 +1,6 @@
-import onChange from "on-change";
 import Scene from "./Scene";
 import createGameObjects from "./gameObjects";
-import { addToStage, setProps } from "./utils";
-import getScene1Model from "../model/scene1";
+import { addToStage, setProps } from "./methods/gameObjectsMathods";
 
 export default class GameplayScene extends Scene {
   constructor(node) {
@@ -14,7 +12,7 @@ export default class GameplayScene extends Scene {
     const gameObjects = this.getGameObjects();
     const {
       bg,
-      stairs,
+      stair,
       stage,
       logo,
       hammerIcon,
@@ -26,9 +24,10 @@ export default class GameplayScene extends Scene {
       globe,
       bookStand,
       plants,
+      continueBtn,
       overlap,
       packshotBanner,
-      continueBtn,
+      packshotBtn,
     } = gameObjects;
 
     okBtn.setTarget(stairIcons[0]);
@@ -39,6 +38,7 @@ export default class GameplayScene extends Scene {
       okBtn,
       overlap,
       packshotBanner,
+      packshotBtn,
     ].forEach((element) => {
       setProps(element, { visible: false });
     });
@@ -53,59 +53,183 @@ export default class GameplayScene extends Scene {
       plants[1],
       plants[2],
       persona,
-      stairs,
+      stair,
       plants[0],
       hammerIcon,
       ...stairIcons,
       okBtn,
+      continueBtn,
       overlap,
       packshotBanner,
-      continueBtn,
+      packshotBtn,
       logo
     );
   }
 
   init() {
-    this.watchedObject = onChange(
-      getScene1Model(),
-      (path, value, previousValue, applyData) => {
-        console.log(path);
-        console.log(value);
-        console.log(previousValue);
-        console.log(applyData);
-      }
-    );
     this.addGameObjects(createGameObjects(this.application));
   }
 
   start() {
-    const go = this.getGameObjects();
-
     this.resizeApplication();
     this.addObjectsToScene();
-
-    this.render();
   }
 
   showHammerIcon() {
+    const { hammerIcon } = this.getGameObjects();
 
+    setProps(hammerIcon, { visible: true });
+    hammerIcon.show();
+    hammerIcon.verticalBounce();
   }
 
-  render() {
-    // this.showPackshot();
+  hideHammerIcon() {
+    const { hammerIcon } = this.getGameObjects();
+    hammerIcon.stopAnimations();
+    hammerIcon.hide();
   }
 
-  initialScene() {
+  showStairIcons(cb) {
+    const { stairIcons } = this.getGameObjects();
 
+    stairIcons.forEach((icon, i) => {
+      icon.on(`pointertap`, () => { cb(icon.id, icon); });
+      setTimeout(() => {
+        icon.show();
+      }, i * 100);
+    });
   }
 
-  showPackshot() {
+  hideStairIcons() {
+    const { stairIcons } = this.getGameObjects();
+
+    stairIcons.forEach((icon, i) => {
+      icon.off(`pointertap`);
+      setTimeout(() => {
+        icon.hide();
+      }, i * 50);
+    });
+  }
+
+  renderStair(state, value, duration = 300) {
+    const { stair } = this.getGameObjects();
+    if (state === `id`) {
+      stair.showItem(value, duration);
+    }
+  }
+
+  renderHammerIcon(state, value, callback) {
+    const { hammerIcon } = this.getGameObjects();
+
+    if (state === `isActive`) {
+      if (value) {
+        hammerIcon.once(`pointertap`, callback);
+        this.showHammerIcon(callback);
+      } else {
+        hammerIcon.off(`pointertap`);
+        this.hideHammerIcon();
+      }
+    }
+  }
+
+  renderContinueBtn(state, value, clickHandler) {
+    const { continueBtn } = this.getGameObjects();
+    const stateMap = {
+      isActive: () => {
+        if (value) {
+          continueBtn.on(`pointertap`, clickHandler);
+          continueBtn.show();
+        } else {
+          continueBtn.off(`pointertap`);
+          continueBtn.hide();
+        }
+      },
+      isAnimationActive: () => {
+        if (value) {
+          continueBtn.scaleBounce();
+        }
+      },
+    };
+
+    stateMap[state]();
+  }
+
+  renderOkBtn(state, value, callback) {
+    const { okBtn } = this.getGameObjects();
+    const stateMap = {
+      isActive: () => {
+        if (value) {
+          okBtn.on(`pointertap`, callback);
+          okBtn.show();
+        } else {
+          okBtn.off(`pointertap`);
+          okBtn.hide();
+        }
+      },
+      target: () => {
+        okBtn.setTarget(value);
+        okBtn.updatePosition();
+      },
+    };
+
+    stateMap[state]();
+  }
+
+  renderStairIcons(state, value, callback) {
+    const { stairIcons } = this.getGameObjects();
+    const stateMap = {
+      isActive: () => {
+        if (value) {
+          this.showStairIcons(callback);
+        } else {
+          this.hideStairIcons();
+        }
+      },
+      currentIconId: () => {
+        if (stairIcons[value]) {
+          stairIcons[value].select();
+        }
+      },
+      prevIconId: () => {
+        if (stairIcons[value]) {
+          stairIcons[value].unselect();
+        }
+      },
+    };
+
+    stateMap[state]();
+  }
+
+  renderPersona(state, value) {
+    const { persona } = this.getGameObjects();
+    const stateMap = {
+      isAnimationActive: () => {
+        if (value) {
+          persona.idleAnimation();
+        }
+      },
+    };
+
+    stateMap[state]();
+  }
+
+  showPackshot(clickHandler) {
     const go = this.getGameObjects();
-    const { overlap, packshotBanner } = go;
+    const { overlap, packshotBanner, packshotBtn } = go;
 
     [overlap, packshotBanner].forEach((element) => {
       setProps(element, { visible: true });
-      // element.show();
+      element.show();
     });
+
+    setTimeout(() => {
+      packshotBtn.on(`pointertap`, clickHandler);
+      setProps(packshotBtn, { visible: true });
+      packshotBtn.show();
+
+      setTimeout(() => {
+        packshotBtn.scaleBounce();
+      }, 700);
+    }, 300);
   }
 }
