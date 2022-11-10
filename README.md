@@ -1,4 +1,4 @@
-# Тестовое задание на позицию HTML5/JS developer для Playrix.
+# Тестовое задание на позицию HTML5/JS developer в компанию Playrix.
 
 ## Технологии
 - [PixiJS](https://pixijs.com/)
