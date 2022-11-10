@@ -1,4 +1,4 @@
-import { idleAnimation } from "../animations";
+import { idleAnimation } from "../methods/animationMethods";
 import SpriteContainer from "./SpriteContainer";
 
 export default class Persona extends SpriteContainer {

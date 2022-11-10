@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+
 function setOrigin(target, originX, originY) {
   const localBounds = target.getLocalBounds();
   const origin = {

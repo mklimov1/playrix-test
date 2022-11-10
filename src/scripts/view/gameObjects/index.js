@@ -8,18 +8,20 @@ import {
   drawOkButton,
   drawOverlap,
   drawPackshotBanner,
+  drawPackshotButton,
   drawPersona,
   drawStairIcon,
   drawStairs,
-} from "../draw";
-import Application from "./Application";
+} from "../methods/drawMethods";
+import Banner from "./Banner";
 import Button from "./Button";
+import Overlap from "./Overlap";
 import Persona from "./Persona";
-import Rectangle from "./Rectangle";
 import Sprite from "./Sprite";
 import StairIcon from "./StairIcon";
-import Stairs from "./Stairs";
+import Stair from "./Stair";
 import TargetButton from "./TargetButton";
+import Icon from "./Icon";
 
 const { Texture } = PIXI;
 
@@ -60,13 +62,14 @@ export default (application) => {
   const { stage, view: canvas } = application;
   const logo = new Sprite(textures.logo);
   const bg = new Sprite(textures.bg);
-  const stairs = new Stairs(textures.stairs);
-  const hammerIcon = new Button(textures.icons.hammer);
+  const stair = new Stair(textures.stairs);
+  const hammerIcon = new Icon(new Sprite(textures.icons.hammer));
   const continueBtn = new Button(textures.continue);
   const okBtn = new TargetButton(textures.ok);
   const persona = new Persona(textures.persona);
-  const packshotBanner = new Sprite(textures.packshotBanner);
-  const overlap = new Rectangle(1000, 1000, [0x000000, 0.6]);
+  const packshotBanner = new Banner(textures.packshotBanner);
+  const packshotBtn = new Button(textures.continue);
+  const overlap = new Overlap(0x000000, 0.6);
   const stairIcons = textures.icons.stairs.map((t, index) => new StairIcon(t, { id: index }));
   const sofa = new Sprite(textures.sofa, { alias: `sofa` });
   const table = new Sprite(textures.table, { alias: `table` });
@@ -81,11 +84,12 @@ export default (application) => {
   setRedrawFunction(okBtn, drawOkButton, canvas, stairIcons);
   setRedrawFunction(bg, drawBackground, canvas);
   setRedrawFunction(overlap, drawOverlap, canvas);
-  setRedrawFunction(stairs, drawStairs, bg);
+  setRedrawFunction(stair, drawStairs, bg);
   setRedrawFunction(logo, drawLogo, canvas);
-  setRedrawFunction(hammerIcon, drawHammerIcon, stairs, canvas);
+  setRedrawFunction(hammerIcon, drawHammerIcon, stair, canvas);
   setRedrawFunction(persona, drawPersona, bg, canvas);
   setRedrawFunction(packshotBanner, drawPackshotBanner, canvas);
+  setRedrawFunction(packshotBtn, drawPackshotButton, packshotBanner, canvas);
   setRedrawFunction(continueBtn, drawContinueButton, canvas);
   stairIcons.forEach((icon) => {
     setRedrawFunction(icon, drawStairIcon, canvas);
@@ -106,7 +110,7 @@ export default (application) => {
     canvas,
     bg,
     logo,
-    stairs,
+    stair,
     hammerIcon,
     persona,
     packshotBanner,
@@ -119,5 +123,6 @@ export default (application) => {
     table,
     sofa,
     plants,
+    packshotBtn,
   };
 };

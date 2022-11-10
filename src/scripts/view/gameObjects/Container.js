@@ -1,5 +1,5 @@
-import { show } from "../animations";
-import { setProps } from "../utils";
+import { show } from "../methods/animationMethods";
+import { setProps } from "../methods/gameObjectsMathods";
 
 export default class Container extends PIXI.Container {
   constructor(children, props = {}) {

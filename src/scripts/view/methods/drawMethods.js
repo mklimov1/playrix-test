@@ -1,6 +1,6 @@
 import {
   scaleToHeight, setProps, getScaledWidth, scaleToWidth, getScaledHeight
-} from "./utils";
+} from "./gameObjectsMathods";
 
 const ORIENTATION_RATIO = 1;
 const isLandscape = (w, h, ratio = 1) => w >= h * ratio;
@@ -201,4 +201,17 @@ export const drawOkButton = (target, depend) => {
   if (target.hasTarget()) {
     target.updatePosition();
   }
+};
+
+export const drawPackshotButton = (target, depend, canvas) => {
+  const { width, height } = canvas;
+  const [maxSize, minSize] = sortSizeByOrientation(width, height, ORIENTATION_RATIO);
+  const size = setSize(target, maxSize * 0.11, minSize * 0.6);
+  const dependBottomOffset = depend.y + getScaledHeight(depend) * 0.5;
+  const props = {
+    x: depend.x,
+    y: dependBottomOffset + size.height * 0.8,
+  };
+
+  setProps(target, props);
 };

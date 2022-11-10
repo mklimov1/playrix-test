@@ -1,4 +1,4 @@
-import { setProps } from "../utils";
+import { setProps } from "../methods/gameObjectsMathods";
 import Graphics from "./Graphics";
 
 export default class Circle extends Graphics {

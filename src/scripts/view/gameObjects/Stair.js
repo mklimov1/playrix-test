@@ -1,7 +1,7 @@
-import { setProps } from "../utils";
+import { setProps } from "../methods/gameObjectsMathods";
 import DecorationItems from "./DecorationItems";
 
-export default class Stairs extends DecorationItems {
+export default class Stair extends DecorationItems {
   constructor(textures, props = {}) {
     super(textures, props);
     const { items, baseSize: { width, height } } = this;
@@ -25,6 +25,6 @@ export default class Stairs extends DecorationItems {
       setProps(item, itemProps[index]);
     });
 
-    this.showItem(3);
+    this.showItem(3, 0);
   }
 }
