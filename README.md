@@ -1,7 +1,7 @@
 # Тестовое задание на позицию HTML5/JS developer в компанию Playrix.
 
 <div align="center">
-  <img src="https://github.com/mklimov1/playrix-test/blob/master/src/assets/images/gameplay.gif" width="95%"/>
+  <img src="src/assets/images/gameplay.gif" width="95%"/>
 </div>
 
 ## Технологии
