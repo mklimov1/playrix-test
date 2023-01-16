@@ -1,6 +1,6 @@
 import {
   scaleToHeight, setProps, getScaledWidth, scaleToWidth, getScaledHeight
-} from "./gameObjectsMathods";
+} from "./gameObjectsMethods";
 
 const ORIENTATION_RATIO = 1;
 const isLandscape = (w, h, ratio = 1) => w >= h * ratio;

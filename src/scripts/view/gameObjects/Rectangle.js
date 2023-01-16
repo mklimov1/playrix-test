@@ -1,4 +1,4 @@
-import { setProps } from "../methods/gameObjectsMathods";
+import { setProps } from "../methods/gameObjectsMethods";
 import Graphics from "./Graphics";
 
 export default class Rectangle extends Graphics {

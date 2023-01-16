@@ -1,5 +1,5 @@
 import { animate, scaleAnimation, stopAnimations } from "../methods/animationMethods";
-import { setProps } from "../methods/gameObjectsMathods";
+import { setProps } from "../methods/gameObjectsMethods";
 import Circle from "./CIrcle";
 import Icon from "./Icon";
 import Sprite from "./Sprite";

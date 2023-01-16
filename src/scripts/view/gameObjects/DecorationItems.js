@@ -1,5 +1,5 @@
 import { animate, stopAnimations } from "../methods/animationMethods";
-import { setProps } from "../methods/gameObjectsMathods";
+import { setProps } from "../methods/gameObjectsMethods";
 import Container from "./Container";
 import Sprite from "./Sprite";
 

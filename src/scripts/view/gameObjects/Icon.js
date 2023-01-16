@@ -1,7 +1,7 @@
 import {
   animate, hide, show, stopAnimations
 } from "../methods/animationMethods";
-import { setProps } from "../methods/gameObjectsMathods";
+import { setProps } from "../methods/gameObjectsMethods";
 import Container from "./Container";
 
 export default class Icon extends Container {

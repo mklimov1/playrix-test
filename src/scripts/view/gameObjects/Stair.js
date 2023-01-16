@@ -1,4 +1,4 @@
-import { setProps } from "../methods/gameObjectsMathods";
+import { setProps } from "../methods/gameObjectsMethods";
 import DecorationItems from "./DecorationItems";
 
 export default class Stair extends DecorationItems {

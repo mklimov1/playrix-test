@@ -1,6 +1,6 @@
 import Scene from "./Scene";
 import createGameObjects from "./gameObjects";
-import { addToStage, setProps } from "./methods/gameObjectsMathods";
+import { addToStage, setProps } from "./methods/gameObjectsMethods";
 
 export default class GameplayScene extends Scene {
   constructor(node) {

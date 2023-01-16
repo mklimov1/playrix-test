@@ -1,4 +1,4 @@
-import { getScaledHeight, setProps } from "../methods/gameObjectsMathods";
+import { getScaledHeight, setProps } from "../methods/gameObjectsMethods";
 import Button from "./Button";
 
 export default class TargetButton extends Button {
